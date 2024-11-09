@@ -56,7 +56,7 @@ pip install -r requirements.txt
 
 
 
-## 二，基础
+## 二，Pytorch基础
 
 官方文档：https://pytorch.org/docs/stable/generated/torch.stack.html
 
@@ -72,7 +72,7 @@ stack 理解：https://blog.csdn.net/weixin_44201525/article/details/109769214
 
   ```python
   scalar = torch.tensor(3)
-  print(scalar.ndimension())  # 输出 0
+  print(scalar.ndimension())  # 输出 0 
   scaler.shape # 表示在维度上的长度 ()
   ```
 
@@ -346,21 +346,27 @@ print(keep)  # 输出 [0, 2]
 
 
 
-## 三，Data
+## 三，Data源码讲解
 
 
 
-## 四，Net
+## 四，Net源码讲解
 
-## 五，Loss
 
-## 六，Detect
 
-## 七，Metric
+## 五，Loss源码讲解
 
-## 八，训练和验证
 
-```shell
-nohup  train.py > details.log 2>&1 &
-```
+
+## 六，Detect源码讲解
+
+
+
+## 七，Metric源码讲解
+
+
+
+## 八，Train源码讲解
+
+
 
