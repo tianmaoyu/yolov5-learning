@@ -184,39 +184,42 @@ class YoloV5Loss(nn.Module):
 
                     # 两个的比例在 0.25-4 之间
                     if (0.25 < w_ratio < 4) and (0.25 < h_ratio < 4):
+
+                        # 相对于网格坐标得偏移
+                        mod_x, mod_y = layer_x - grid_x, layer_y - grid_y
+
                         mask[b, k, grid_y, grid_x] = torch.tensor(True, device=device)
                         # 注意：类别是 one-hot 编码
                         target[b, k, grid_y, grid_x, 5 + class_index] = torch.tensor(1, device=device)
-                        # 相对于网格坐标得偏移
-                        mod_x, mod_y = layer_x - grid_x, layer_y - grid_y
                         # 计算 x,y,w,h, 注意：x,y 是相对于该grid_x,grid_y坐标的偏移
                         target[b, k, grid_y, grid_x, :4] = torch.tensor([mod_x, mod_y, layer_w, layer_h], device=device)
+
 
                         # 匹配 网格 left,top,right,down 是否满足
                         # left
                         if mod_x < 0.5 and grid_x > 0:
-                            target[b, k, grid_y, grid_x - 1, :4] = torch.tensor([mod_x + 1, mod_y, layer_w, layer_h],
-                                                                                device=device)
-                            target[b, k, grid_y, grid_x - 1, 5 + class_index] = torch.tensor(1, device=device)
                             mask[b, k, grid_y, grid_x - 1] = torch.tensor(True, device=device)
+                            target[b, k, grid_y, grid_x - 1, 5 + class_index] = torch.tensor(1, device=device)
+                            target[b, k, grid_y, grid_x - 1, :4] = torch.tensor([mod_x + 1, mod_y, layer_w, layer_h],device=device)
+
                             # top
                         if mod_y < 0.5 and grid_y > 0:
-                            target[b, k, grid_y - 1, grid_x, :4] = torch.tensor([mod_x, mod_y + 1, layer_w, layer_h],
-                                                                                device=device)
+                            mask[  b, k, grid_y - 1, grid_x] = torch.tensor(True, device=device)
+                            target[b, k, grid_y - 1, grid_x, :4] = torch.tensor([mod_x, mod_y + 1, layer_w, layer_h],device=device)
                             target[b, k, grid_y - 1, grid_x, 5 + class_index] = torch.tensor(1, device=device)
-                            mask[b, k, grid_y - 1, grid_x] = torch.tensor(True, device=device)
+
                         # right
                         if mod_x > 0.5 and grid_x < width - 1:
-                            target[b, k, grid_y, grid_x + 1, :4] = torch.tensor([mod_x - 1, mod_y, layer_w, layer_h],
-                                                                                device=device)
-                            target[b, k, grid_y, grid_x + 1, 5 + class_index] = torch.tensor(1, device=device)
                             mask[b, k, grid_y, grid_x + 1] = torch.tensor(True, device=device)
+                            target[b, k, grid_y, grid_x + 1, 5 + class_index] = torch.tensor(1, device=device)
+                            target[b, k, grid_y, grid_x + 1, :4] = torch.tensor([mod_x - 1, mod_y, layer_w, layer_h], device=device)
+
                         # down
                         if mod_y > 0.5 and grid_y < height - 1:
-                            target[b, k, grid_y + 1, grid_x, :4] = torch.tensor([mod_x, mod_y - 1, layer_w, layer_h],
-                                                                                device=device)
-                            target[b, k, grid_y + 1, grid_x, 5 + class_index] = torch.tensor(1, device=device)
                             mask[b, k, grid_y + 1, grid_x] = torch.tensor(True, device=device)
+                            target[b, k, grid_y + 1, grid_x, 5 + class_index] = torch.tensor(1, device=device)
+                            target[b, k, grid_y + 1, grid_x, :4] = torch.tensor([mod_x, mod_y - 1, layer_w, layer_h],  device=device)
+
 
         return target, mask
 
