@@ -1,7 +1,6 @@
 import torch
 
 import torch
-import torchmetrics
 import torchvision
 from colorama import Fore
 from torch import Tensor
@@ -250,8 +249,8 @@ class YoloV5Metric:
 
 if __name__ == '__main__':
 
-    image_path = "coco8/images/train2017"
-    label_path = "coco8/labels/train2017"
+    image_path = "coco8/images/train"
+    label_path = "coco8/labels/train"
     dataset = CocoDataset(image_path, label_path,scaleFill=True)
     eval_dataloader = DataLoader(dataset=dataset, batch_size=2, collate_fn=CocoDataset.collate_fn)
 

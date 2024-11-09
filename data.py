@@ -1,20 +1,19 @@
 import glob
 import os
-
 import torch
 from PIL import Image
 from functorch.dim import Tensor
 from matplotlib import pyplot as plt
 from torch.utils.data import Dataset
 from torchvision.transforms import ToPILImage,functional
-from  tqdm import  trange,tqdm
+from  tqdm import  tqdm
 import utils
 
 
 class CocoDataset(Dataset):
     img_formats = ['bmp', 'jpg', 'jpeg', 'png', 'tif', 'tiff', 'dng', 'webp', 'mpo']  # acceptable image suffixes
 
-    def __init__(self, image_path, label_path,num=10000,scaleFill=False):
+    def __init__(self, image_path, label_path,scaleFill=False):
         super().__init__()
         self.scaleFill=scaleFill
         self.image_path = image_path
@@ -30,19 +29,6 @@ class CocoDataset(Dataset):
         label_files_bar=tqdm(label_files,total=len(label_files), leave=True, colour="red",desc="原图加载")
         # 根据 label 找到对应的图片
         for i,label_file in enumerate(label_files_bar):
-
-            if i> num:
-                break
-
-            # # 大批量筛选太慢
-            # file_name = os.path.basename(label_file).split(".")[0]
-            # images = glob.glob(os.path.join(self.image_path, file_name + '.*'))
-            # images = [x for x in images if x.split('.')[-1].lower() in CocoDataset.img_formats]
-            # if len(images) < 1:
-            #     continue
-            #
-            # self.label_list.append(label_file)
-            # self.image_list.append(images[0])
 
             # 直接 jpg 文件匹配
             file_name = os.path.basename(label_file).split(".")[0]
@@ -96,10 +82,10 @@ class CocoDataset(Dataset):
 
 
 if __name__ == '__main__':
-    image_path = "coco8/images/train2017"
-    label_path = "coco8/labels/train2017"
+    image_path = "coco8/images/train"
+    label_path = "coco8/labels/train"
     dataset= CocoDataset(image_path, label_path)
-    image,labels=dataset[9]
+    image,labels=dataset[1]
 
     print(labels)
 

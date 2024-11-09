@@ -12,13 +12,12 @@ import utils
 from tqdm import  tqdm
 
 
-total_epoch = 300
 logger = utils.config_logger()
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 train_dataset = CocoDataset("coco8/images/train", "coco8/labels/train", scaleFill=True)
 eval_dataset = CocoDataset("coco8/images/train", "coco8/labels/train", scaleFill=True)
-
 train_dataloader = DataLoader(dataset=train_dataset, batch_size=2, collate_fn=CocoDataset.collate_fn)
 eval_dataloader = DataLoader(dataset=eval_dataset, batch_size=2, collate_fn=CocoDataset.collate_fn)
 
@@ -28,9 +27,8 @@ model = YoloV5(class_num=80).to(device)
 loss = YoloV5Loss(class_num=80).to(device)
 metric = YoloV5Metric()
 optimizer = Adam(model.parameters(), 0.01)
-scheduler = lr_scheduler.CosineAnnealingLR(optimizer, T_max=total_epoch, eta_min=0.002)
-scaler = torch.amp.GradScaler()
 
+total_epoch = 200
 for epoch in range(total_epoch):
 
     # 训练--------------------------------------------------------------------
@@ -52,9 +50,6 @@ for epoch in range(total_epoch):
         # 日志
         box_loss, obj_loss, cls_loss, yolo_loss = train_total_loss.cpu().numpy().round(5)
         train_bar.set_postfix(loss=yolo_loss, box=box_loss, obj=obj_loss, cls=cls_loss, )
-
-    # 动态调整学习率
-    scheduler.step()
 
 
     # 验证 --------------------------------------------------------------------
