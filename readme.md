@@ -10,7 +10,7 @@
 
 ## 一，运行项目
 
-### 1，下载源代码
+### 1.1，下载源代码
 
 ```shell
 git clone https://github.com/tianmaoyu/yolov5-learning
@@ -19,7 +19,7 @@ cd yolov5-learning
 pip install -r requirements.txt
 ```
 
-### 2，目录介绍
+### 1.2，目录介绍
 
 - coco8目录 : coco 数据集中的前 8张图片，要来训练和验证 模型是否能学习到东西
 - data目录 :  visdrone 无人机数据集几张测试图片
@@ -32,7 +32,7 @@ pip install -r requirements.txt
 - **metric.py:** 性能指标的定义
 - **detect.py:** 检测头， 使用训练好的 模型进行 预测。
 
-### 3，detect.py 运行
+### 1.3，detect.py 运行
 
 >  代码加载yolov5-156.pth 模型，和一张图片进行检测； 下面是默认效果
 
@@ -40,7 +40,7 @@ pip install -r requirements.txt
 
 
 
-### 4，训练 train.py
+### 1.4，训练 train.py
 
 默认使用 coco8 （八张）图片进行训练和验证。
 
@@ -56,9 +56,7 @@ pip install -r requirements.txt
 
 
 
-## 二，学习
-
-### 1. 基础
+## 二，基础
 
 官方文档：https://pytorch.org/docs/stable/generated/torch.stack.html
 
@@ -66,7 +64,9 @@ stack 理解：https://blog.csdn.net/weixin_44201525/article/details/109769214
 
 张量是多维数组的泛化，既可以是一维的向量、二维的矩阵，也可以是三维、四维甚至更高维的对象。
 
-#### 1.1 张量的维度
+### 2.1. Tensor
+
+#### 2.1.1 张量的维度
 
 - **0维张量**：标量。一个单一的数值。
 
@@ -106,7 +106,7 @@ stack 理解：https://blog.csdn.net/weixin_44201525/article/details/109769214
   print(image_batch.ndimension())  # 输出 4
   ```
 
-#### 1.2 创建张量
+#### 2.1.2 创建张量
 
 - `torch.randn`：生成一个随机张量，服从标准正态分布。
 
@@ -131,9 +131,9 @@ stack 理解：https://blog.csdn.net/weixin_44201525/article/details/109769214
 
 ------
 
-### 2. **张量变形与操作**
+### 2.2. **张量变形与操作**
 
-#### 2.1 改变张量的索引方式：`view()`
+#### 2.2.1 改变张量的索引方式：`view()`
 
 `view()` 方法用来改变张量的形状，==不会改变数据本身==，只是返回一个新的张量。要注意，新的形状必须是原张量形状的重排，不会改变数据的顺序。
 
@@ -143,7 +143,7 @@ x_reshaped = x.view(16)  # 改变形状为 1x16
 print(x_reshaped)
 ```
 
-#### 2.2 重新排列维度：`permute()`
+#### 2.2.2 重新排列维度：`permute()`
 
 `permute()` 方法可以重新排列维度的顺序，适用于需要调整维度顺序的情况，如图像数据（通常是 CHW 顺序，转为 HWC）。
 
@@ -153,7 +153,7 @@ x_permuted = x.permute(2, 0, 1)  # shape: (4, 2, 3)
 print(x_permuted)
 ```
 
-#### 2.3 内存排列：`contiguous()`
+#### 2.2.3 内存排列：`contiguous()`
 
 有时候，`permute()` 操作会导致张量的==内存布局==发生变化，使用 `contiguous()` 可以确保返回一个有着连续内存的张量。
 
@@ -166,9 +166,9 @@ print(x_contiguous.is_contiguous())  # 输出 True
 
 ------
 
-### 3. **广播与维度操作**
+### 2.3. **广播与维度操作**
 
-#### 3.1 广播机制（Broadcasting）
+#### 2.3.1 广播机制（Broadcasting）
 
 广播是指在不同形状的张量进行运算时，PyTorch 会自动地扩展其中的某些维度，使得两个张量具有相同的形状。
 
@@ -179,7 +179,7 @@ result = a + b  # 自动广播
 print(result)
 ```
 
-#### 3.2 维度增加与减少
+#### 2.3.2 维度增加与减少
 
 - 增加维度：使用 `unsqueeze()` 来增加一个维度。
 
@@ -199,7 +199,7 @@ print(result)
 
 ------
 
-### 4. **从 list 到 tensor，tensor 到 list**
+### 2.4. **从 list 到 tensor，tensor 到 list**
 
 - **list 到 tensor**：
 
@@ -218,23 +218,23 @@ print(result)
 
 ------
 
-### 5. **张量索引与赋值**
+### 2.5. **张量索引与赋值**
 
-#### 5.1 普通索引
+#### 2.5.1 普通索引
 
 ```python
 x = torch.tensor([1, 2, 3, 4, 5])
 print(x[2])  # 输出 3
 ```
 
-#### 5.2 高级索引
+#### 2.5.2 高级索引
 
 ```python
 x = torch.tensor([[1, 2], [3, 4], [5, 6]])
 print(x[:, 1])  # 输出第二列: tensor([2, 4, 6])
 ```
 
-#### 5.3 指定索引赋值
+#### 2.5.3 指定索引赋值
 
 ```python
 x = torch.tensor([1, 2, 3])
@@ -244,9 +244,9 @@ print(x)  # 输出 tensor([ 1, 10,  3])
 
 ------
 
-### 6. **张量的其他操作**
+### 2.6. **张量的其他操作**
 
-#### 6.1 `torch.min`, `torch.max`
+#### 2.6.1 `torch.min`, `torch.max`
 
 ```python
 x = torch.tensor([1, 2, 3, 4])
@@ -255,7 +255,7 @@ max_value = torch.max(x)
 print(min_value, max_value)  # 输出 1, 4
 ```
 
-#### 6.2 `sigmoid` 函数
+#### 2.6.2 `sigmoid` 函数
 
 ```python
 x = torch.tensor([-1.0, 0.0, 1.0])
@@ -263,7 +263,7 @@ sigmoid_result = torch.sigmoid(x)
 print(sigmoid_result)  # 输出 [0.2689, 0.5, 0.7311]
 ```
 
-#### 6.3 `stack` 和 `cat`
+#### 2.6.3 `stack` 和 `cat`
 
 - `stack`：将多个张量沿==新==维度连接。
 
@@ -285,7 +285,7 @@ print(sigmoid_result)  # 输出 [0.2689, 0.5, 0.7311]
 
 ------
 
-### 7. **设备管理：Tensor 在 CPU 与 GPU 上**
+### 2.7. **设备管理：Tensor 在 CPU 与 GPU 上**
 
 张量需要在同一设备上进行计算，因此张量之间的操作要求它们在相同的设备上。
 
@@ -298,9 +298,9 @@ print(result)
 
 ------
 
-### 8. **API 介绍**
+### 2.8. **API 介绍**
 
-#### 8.1 `torchvision.ops.nms`
+#### 2.8.1 `torchvision.ops.nms`
 
 `nms`（非极大值抑制）用于在目标检测中去除多余的重叠框。
 
@@ -313,7 +313,7 @@ keep = ops.nms(boxes, scores, 0.5)
 print(keep)  # 输出 [0, 2]
 ```
 
-#### 8.2 `torchmetrics.detection.MeanAveragePrecision`
+#### 2.8.2 `torchmetrics.detection.MeanAveragePrecision`
 
 `MeanAveragePrecision`（mAP）是衡量目标检测模型性能的重要指标。
 
@@ -332,7 +332,7 @@ mAP = metric(preds, targets)
 print(mAP.compute())
 ```
 
-#### 8.3 `torchvision.ops.batched_nms`
+#### 2.8.3 `torchvision.ops.batched_nms`
 
 `batched_nms` 适用于处理批量数据的非极大值抑制。
 
@@ -346,19 +346,19 @@ print(keep)  # 输出 [0, 2]
 
 
 
+## 三，Data
 
 
-### 2，Data
 
-### 3，Net
+## 四，Net
 
-### 4，Loss
+## 五，Loss
 
-### 5，Detect
+## 六，Detect
 
-### 6，Metric
+## 七，Metric
 
-### 7，训练和验证
+## 八，训练和验证
 
 ```shell
 nohup  train.py > details.log 2>&1 &
