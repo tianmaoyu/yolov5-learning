@@ -1,9 +1,8 @@
 
 # Usage: pip install -r requirements.txt
-numpy>=1.22.2
-Pillow>=7.1.2
-torch>=1.7.0
-torchvision>=0.8.1
-tqdm>=4.64.0
+numpy
+torch
+torchvision
+tqdm
 pycocotools
-
+torchmetrics
