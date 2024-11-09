@@ -356,3 +356,7 @@ print(keep)  # 输出 [0, 2]
 
 ## 十，训练和验证
 
+```shell
+nohup  train.py > details.log 2>&1 &
+```
+
