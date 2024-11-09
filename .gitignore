@@ -1,0 +1,15 @@
+*.iml
+.idea/
+*.idea/
+*.iws
+*.ipr
+*.pyc
+*.pyo
+logs/
+dataset/
+/unet/out/
+*.png
+*.jpg
+/object-detection/yolov5/coco128/
+/object-detection/yolov5/coco128/*
+*.pth
