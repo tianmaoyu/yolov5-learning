@@ -8,9 +8,9 @@
 
 ![image-20241108230712951](data/image-20241108230712951.png)
 
+## 一，运行项目
 
-
-### 一，下载源代码
+### 1，下载源代码
 
 ```shell
 git clone https://github.com/tianmaoyu/yolov5-learning
@@ -19,9 +19,7 @@ cd yolov5-learning
 pip install -r requirements.txt
 ```
 
-
-
-### 二，目录介绍
+### 2，目录介绍
 
 - coco8目录 : coco 数据集中的前 8张图片，要来训练和验证 模型是否能学习到东西
 - data目录 :  visdrone 无人机数据集几张测试图片
@@ -34,11 +32,7 @@ pip install -r requirements.txt
 - **metric.py:** 性能指标的定义
 - **detect.py:** 检测头， 使用训练好的 模型进行 预测。
 
-
-
-
-
-### 三，detect.py 运行
+### 3，detect.py 运行
 
 >  代码加载yolov5-156.pth 模型，和一张图片进行检测； 下面是默认效果
 
@@ -46,50 +40,29 @@ pip install -r requirements.txt
 
 
 
-### 四，训练 train.py
+### 4，训练 train.py
 
 默认使用 coco8 （八张）图片进行训练和验证。
 
 ![image-20241109192337071](img/image-20241109192337071.png)
 
-**详细的日志**
+**日志**：
 
 ![image-20241109192827228](img/image-20241109192827228.png)
 
-
-
-==注意==：记得自行清理 .pth 文件
+**注意：**记得自行清理 .pth 文件
 
 ![image-20241109192433519](img/image-20241109192433519.png)
 
 
 
-## 三，张量操作技巧和API
+## 二，学习
 
-- [ ] 张量，度行 0维，列 1：维； 图像 ：宽高 ； 正好是反的
+### 1. 基础
 
-  ```python
-  import torch
-  data0= torch.tensor(1)
-  data01= torch.tensor(False)
-  data1=torch.randn(size=[2,3])
-  # 不是 1 行两列， 维度=1
-  data2 = torch.tensor([1, 2])
-  # 一行两列， 维度=2
-  data3 = torch.tensor([[1,2]])
-  data4 = torch.tensor([[1],[2]])
-  print(data1)
-  ```
+官方文档：https://pytorch.org/docs/stable/generated/torch.stack.html
 
-  
-
-### 1. **张量的基本定义与维度**
-
-https://pytorch.org/docs/stable/generated/torch.stack.html
-
-stack 理解：
-
-https://blog.csdn.net/weixin_44201525/article/details/109769214
+stack 理解：https://blog.csdn.net/weixin_44201525/article/details/109769214
 
 张量是多维数组的泛化，既可以是一维的向量、二维的矩阵，也可以是三维、四维甚至更高维的对象。
 
@@ -373,19 +346,19 @@ print(keep)  # 输出 [0, 2]
 
 
 
-## 四，卷积神经网络模板
 
-## 五，Data
 
-## 六，Net
+### 2，Data
 
-## 七，Loss
+### 3，Net
 
-## 八，Detect
+### 4，Loss
 
-## 九，Metric
+### 5，Detect
 
-## 十，训练和验证
+### 6，Metric
+
+### 7，训练和验证
 
 ```shell
 nohup  train.py > details.log 2>&1 &
