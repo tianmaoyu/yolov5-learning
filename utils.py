@@ -128,14 +128,14 @@ def xywh2xyxy(data: Tensor):
     return data
 
 
-def config_logger(name="train"):
+def config_logger(log_file= "app.log"):
     # 设置日志的基本配置
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     logger = logging.getLogger("train")
     logger.setLevel(logging.DEBUG)
 
     # 创建一个handler，用于写入日志文件
-    file_handler = logging.FileHandler('app.log')
+    file_handler = logging.FileHandler(log_file)
     file_handler.setFormatter(formatter)
     logger.addHandler(file_handler)
 

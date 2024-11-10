@@ -6,3 +6,4 @@ torchvision
 tqdm
 pycocotools
 torchmetrics
+opencv-python
